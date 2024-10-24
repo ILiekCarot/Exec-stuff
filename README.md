@@ -10,13 +10,6 @@ This is self-explanatory; just dump Roblox with a bypassed Scylla or decrypt it(
 
 Bro, just Google IDA Crack and go on some russian forum!1!1!11
 
-### Rebasing
-
-This is optional, but the examples we have are rebased to 0x40000.
-
-To rebase go to: "Edit/Segments/Rebase Program".<br>
-Only change the hex address that's already there, nothing else.
-
 ## Finding Important Addresses
 
 ### Finding lua_newstate
