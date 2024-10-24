@@ -32,7 +32,7 @@ if ( !v8 )
 ```
 The function taking two parameters (second being 0) and returning a value that's checked for NULL is `lua_newstate` (sub_52A929C in this example).
 
-### Finding lua_pushstring
+### Finding lua_pushstring & lua_pushcclosurek
 1. Open Strings view (Shift + F12)
 2. Search for: `__index`
 3. Look at the first cross-reference (Ctrl + X or X)
@@ -48,21 +48,40 @@ if ( *a4 )
 ```
 The function taking two parameters (second being "__index") is `lua_pushstring` (sub_5297B8C in this example).
 
-### Finding lua_pushcclosurek
+The function taking five parameters (last three being 0) is `lua_pushcclosurek` (sub_5297DD4 in this example).
+
+### Finding lua_setfield, _G & LUA_GLOBALSINDEX
 1. Open Strings view (Shift + F12)
-2. Search for: `__index`
-3. Look at the first cross-reference (Ctrl + X or X)
+2. Search for: `_VERSION`
+3. Look at any of the two cross-reference (Ctrl + X or X)
 4. Decompile the results (TAB or F5)
-5. You should see code like this:
+5. You should see a sub like this:
 ```c
-if ( *a4 )
+__int64 __fastcall sub_529ADA4(__int64 a1)
 {
-  sub_5297B8C(a1, "__index");
-  sub_5297DD4(a1, *a4, 0LL, 0, 0LL);
-  sub_52986CC(a1, 4294967293LL);
+  sub_5296C98(a1, 4294957294LL);
+  sub_5298750(a1, 4294957294LL, "_G");
+  sub_529A300(a1, (__int64)"_G", off_680A280);
+  sub_5297B00(a1, "Luau", 4LL);
+  sub_5298750(a1, 4294957294LL, "_VERSION");
+  sub_5297DD4(a1, (__int64)sub_529AD34, 0LL, 0, 0LL);
+  sub_5297DD4(a1, (__int64)sub_529AF30, (__int64)"ipairs", 1u, 0LL);
+  sub_5298750(a1, 4294967294LL, "ipairs");
+  sub_5297DD4(a1, (__int64)sub_529ACDC, 0LL, 0, 0LL);
+  sub_5297DD4(a1, (__int64)sub_529AF80, (__int64)"pairs", 1u, 0LL);
+  sub_5298750(a1, 4294967294LL, "pairs");
+  sub_5297DD4(a1, (__int64)sub_529AFCC, (__int64)"pcall", 0, (__int64)sub_529B0A8);
+  sub_5298750(a1, 4294967294LL, "pcall");
+  sub_5297DD4(a1, (__int64)sub_529B114, (__int64)"xpcall", 0, (__int64)sub_529B228);
+  sub_5298750(a1, 4294967294LL, "xpcall");
+  return 1LL;
 }
 ```
-The function taking five parameters (last three being 0) is `lua_pushcclosurek` (sub_5297DD4 in this example).
+The function taking three parameters (second being the index and third being the name of the field) is `lua_setfield` (sub_5298750 in this example).
+
+The number 4294967294 (0xFFFFFFFE) is `_G` (-2), which refers to the second element from the top of the stack.
+
+The number 4294957294 (0xFFFFFFF6) is `LUA_GLOBALSINDEX` (-10002), which is a pseudo-index that always refers to the global table.
 
 ## Quick Reference
 
@@ -80,6 +99,17 @@ The function taking five parameters (last three being 0) is `lua_pushcclosurek` 
 - Shows all references to the selected item
 - Access via `Ctrl + X` or `X` menu
 - Click references to navigate to them
+
+### What can I do now?
+As of writing this, only newstate, push & field stuff was included. This is what you can do with the stuff you got earlier:
+```cpp
+l = lua_newstate(&loc_2CC93A4, 0); 
+lua_pushcclosurek(l, func, 0, 0, 0);
+lua_setfield(l, _G, "name");
+```
+You can replace `func` and `name` with whatever you wish to!
+
+In the future when I update this, you can make a script executor so you can actually use these functions!
 
 ## Notes
 
