@@ -26,6 +26,17 @@ if ( !v8 )
 ```
 The function taking two parameters (second being 0) and returning a value that's checked for NULL is `lua_newstate` (sub_52A929C in this example).
 
+### Finding luau_load
+1. Open Strings view (Shift + F12)
+2. Search for: `%s%.*s`
+3. Look at any of the two cross-references (Ctrl + X or X)
+4. Decompile the results (TAB or F5)
+5. This should be in a sub that looks like this:
+```c
+__int64 __fastcall sub_52BA4DC(__int64 a1, const char *a2, const char *a3, int a4, unsigned int a5)
+```
+That sub is `luau_load` (sub_52BA4DC in this example).
+
 ### Finding lua_pushstring & lua_pushcclosurek
 1. Open Strings view (Shift + F12)
 2. Search for: `__index`
@@ -47,7 +58,7 @@ The function taking five parameters (last three being 0) is `lua_pushcclosurek` 
 ### Finding lua_setfield, _G & LUA_GLOBALSINDEX
 1. Open Strings view (Shift + F12)
 2. Search for: `_VERSION`
-3. Look at any of the two cross-reference (Ctrl + X or X)
+3. Look at any of the two cross-references (Ctrl + X or X)
 4. Decompile the results (TAB or F5)
 5. You should see a sub like this:
 ```c
