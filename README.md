@@ -4,7 +4,8 @@
 
 ### Decrypting Roblox
 
-This is self-explanatory; just dump Roblox with a bypassed Scylla or decrypt it(the keyword here is ChaCha20).
+This is self-explanatory; just dump Roblox with a bypassed Scylla or decrypt it(the keyword here is ChaCha20).<br>
+This step can be skipped if you're disassembling a mobile version.
 
 ### Disassembling Roblox
 
