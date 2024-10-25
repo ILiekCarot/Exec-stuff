@@ -88,6 +88,46 @@ The number 4294967294 (0xFFFFFFFE) is `_G` (-2), which refers to the second elem
 
 The number 4294957294 (0xFFFFFFF6) is `LUA_GLOBALSINDEX` (-10002), which is a pseudo-index that always refers to the global table.
 
+### Finding luaL_register
+1. Open Strings view (Shift + F12)
+2. Search for: `_LOADED`
+3. Look at any of the two cross-references (Ctrl + X or X)
+4. Decompile the results (TAB or F5)
+5. You should see a sub like this:
+```c
+void __fastcall sub_529A300(__int64 result, const char *a2, __int64 *a3)
+{
+  unsigned int v6; // w22
+  __int64 *v7; // x8
+  __int64 v8; // t1
+  __int64 v9; // x2
+  __int64 *v10; // x20
+  __int64 v11; // t1
+
+  if ( a2 )
+  {
+    if ( *a3 )
+    {
+      v6 = 0;
+      v7 = a3 + 2;
+      do
+      {
+        v8 = *v7;
+        v7 += 2;
+        ++v6;
+      }
+      while ( v8 );
+    }
+    else
+    {
+      v6 = 0;
+    }
+    sub_529A428(result, 4294957296LL, "_LOADED", 1LL);
+    sub_5298018(result, 0xFFFFFFFFLL, a2);
+// There's more below this too btw \\
+```
+That sub is `luaL_register` (sub_529A300 in this example).
+
 ## Quick Reference
 
 ### Essential IDA Shortcuts
