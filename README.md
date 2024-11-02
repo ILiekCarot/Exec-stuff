@@ -24,7 +24,7 @@ v8 = sub_52A929C(&loc_2CC93A4, 0LL);
 if ( !v8 )
     sub_62BAA48("Failed to create Lua state");
 ```
-The function taking two parameters (second being 0) and returning a value that's checked for NULL is `lua_newstate` (sub_52A929C in this example).
+The function taking any amount of parameters (last being 0) and returning a value that's checked for NULL is `lua_newstate` (sub_52A929C in this example).
 
 ### Finding luau_load
 1. Open Strings view (Shift + F12)
